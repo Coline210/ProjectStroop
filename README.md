@@ -1,7 +1,5 @@
 # Stroop Task Experiment 
 
-http://Coline210.github.io/ProjectStroop
-
 ## Overview
 
 This repository contains two Python scripts designed to conduct variations of the Stroop Task, a classic psychological experiment that explores cognitive interference and the reaction time of tasks. Both scripts are implemented using the Expyriment library, a Python library for cognitive and neuroscientific experiments.
