@@ -1,58 +1,72 @@
 import expyriment
 import random
 
-# Définir les couleurs
-couleurs = {"rouge": (255, 0, 0), "vert": (0, 255, 0), "bleu": (0, 0, 255), "purple": (128, 0, 128)}
+# Define colors
+colors = {"red": (255, 0, 0), "green": (0, 255, 0), "blue": (0, 0, 255), "purple": (128, 0, 128)}
 
-# Créer l'expérience
-exp = expyriment.design.Experiment(name="Stroop Task Combined")
+# Create the experiment
+exp = expyriment.design.Experiment(name="Color Identification Stroop Task")
 expyriment.control.initialize(exp)
 
-# Définir une fonction pour afficher un carré de couleur et attendre une réponse
-def afficher_carré(couleur):
-    stimulus = expyriment.stimuli.Rectangle(size=(100, 100), colour=couleur)
+# Define a function to display a colored square and wait for a response
+def display_square(color):
+    stimulus = expyriment.stimuli.Rectangle(size=(100, 100), colour=color)
     stimulus.preload()
     stimulus.present()
     exp.clock.reset_stopwatch()
     key, rt = exp.keyboard.wait(keys=[expyriment.misc.constants.K_q, expyriment.misc.constants.K_d, expyriment.misc.constants.K_j, expyriment.misc.constants.K_l])
     return key, rt
 
-# Définir une fonction pour afficher un mot coloré et attendre une réponse
-def afficher_mot(mot, couleur_impression):
-    stimulus = expyriment.stimuli.TextLine(text=mot, text_colour=couleur_impression)
+# Define a function to display a colored word and wait for a response
+def display_word(word, print_color):
+    # Increase the text size here
+    stimulus = expyriment.stimuli.TextLine(text=word, text_colour=print_color, text_size=40)
     stimulus.preload()
     stimulus.present()
     exp.clock.reset_stopwatch()
     key, rt = exp.keyboard.wait(keys=[expyriment.misc.constants.K_q, expyriment.misc.constants.K_d, expyriment.misc.constants.K_j, expyriment.misc.constants.K_l])
     return key, rt
 
-# Préparer l'expérience
+# Prepare the experiment
 expyriment.control.start()
 
-# Instruction générale
-instructions = expyriment.stimuli.TextLine(text="Appuyez sur 'q' pour rouge, 'd' pour vert, 'j' pour bleu, 'l' pour violet", text_colour=(255, 255, 255))
-instructions.present()
+# General instruction
+general_instructions = expyriment.stimuli.TextLine(text="Welcome to the Color Identification Stroop Task. You will be asked to identify the color in two different tasks. Please follow the instructions for each task carefully. Press any key to continue.",
+                                                    text_colour=(255, 255, 255), text_size=30)
+general_instructions.present()
 exp.keyboard.wait()
 
-# Tâche 1: Identification de la couleur du carré
-for i in range(10):  # 10 essais pour la tâche des carrés
-    couleurs_list = list(couleurs.values())
-    random.shuffle(couleurs_list)
-    for couleur in couleurs_list:
-        key, rt = afficher_carré(couleur)
-        nom_couleur = [k for k, v in couleurs.items() if v == couleur][0]
-        print(f"Couleur: {nom_couleur}, Touche: {key}, RT: {rt}")
+# Instructions for the first task
+task1_instructions = expyriment.stimuli.TextLine(text="Task 1: Press the key corresponding to the color of the square that appears on the screen. Press 'q' for red, 'd' for green, 'j' for blue, 'l' for purple. When you are ready, press any key to start.",
+                                                 text_colour=(255, 255, 255), text_size=30)
+task1_instructions.present()
+exp.keyboard.wait()
 
-# Tâche 2: Identification de la couleur des mots
-mots = ["rouge", "vert", "bleu", "purple"]
-for i in range(5):  # 5 essais pour la tâche des mots
-    random.shuffle(mots)
-    for mot in mots:
-        couleurs_possibles = [v for k, v in couleurs.items() if k != mot]
-        couleur_impression = random.choice(couleurs_possibles)
-        key, rt = afficher_mot(mot, couleur_impression)
-        nom_couleur = [k for k, v in couleurs.items() if v == couleur_impression][0]
-        print(f"Mot: {mot}, Couleur: {nom_couleur}, Touche: {key}, RT: {rt}")
+# Task 1: Color Identification of the Square
+for i in range(1):  # 1 trial for the square color task
+    color_list = list(colors.values())
+    random.shuffle(color_list)
+    for color in color_list:
+        key, rt = display_square(color)
+        color_name = [k for k, v in colors.items() if v == color][0]
+        print(f"Color: {color_name}, Key: {key}, RT: {rt}")
 
-# Fin de l'expérience
+# Instructions for the second task
+task2_instructions = expyriment.stimuli.TextLine(text="Task 2: Press the key corresponding to the color of the word displayed, not the text of the word itself. Press 'q' for red, 'd' for green, 'j' for blue, 'l' for purple. When you are ready, press any key to start.",
+                                                 text_colour=(255, 255, 255), text_size=30)
+task2_instructions.present()
+exp.keyboard.wait()
+
+# Task 2: Color Identification of the Words
+words = ["red", "green", "blue", "purple"]
+for i in range(1):  # 1 trial for the word color task
+    random.shuffle(words)
+    for word in words:
+        possible_colors = [v for k, v in colors.items() if k != word]
+        print_color = random.choice(possible_colors)
+        key, rt = display_word(word, print_color)
+        color_name = [k for k, v in colors.items() if v == print_color][0]
+        print(f"Word: {word}, Color: {color_name}, Key: {key}, RT: {rt}")
+
+# End of the experiment
 expyriment.control.end()
