@@ -22,7 +22,7 @@ Before running the scripts, ensure that Python and the necessary packages are in
 2. **Install Expyriment:**
    Expyriment can be installed via pip. Open your command line interface and run:
 
-   pip install expyriment
+   `pip install expyriment`
    
 ## Usage
 
