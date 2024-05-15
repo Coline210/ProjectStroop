@@ -1,6 +1,7 @@
 import expyriment
 import random
 import csv
+import os
 
 # Define colors
 colors = {"red": (255, 0, 0), "green": (0, 255, 0), "blue": (0, 0, 255), "purple": (128, 0, 128)}
@@ -26,6 +27,20 @@ def display_word(word, print_color):
     exp.clock.reset_stopwatch()
     key, rt = exp.keyboard.wait(keys=[expyriment.misc.constants.K_q, expyriment.misc.constants.K_d, expyriment.misc.constants.K_j, expyriment.misc.constants.K_l])
     return key, rt
+
+# Define a function to save the results to a CSV file
+def save_results(results, task, group="control_group"):
+    """Saves the results to a CSV file."""
+    directory = os.path.join(group, "results")
+    os.makedirs(directory, exist_ok=True)
+    results_path = os.path.join(directory, f"results_task{task}.csv")
+ 
+    with open(results_path, mode='w', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow(["Color", "Key", "RT"])
+        writer.writerows(results)
+    
+    print(f"Results saved to: {results_path}")
 
 # Prepare the experiment
 expyriment.control.start()
@@ -54,13 +69,10 @@ for i in range(1):  # 1 trial for the word color task
         print_color = random.choice(possible_colors)
         key, rt = display_word(word, print_color)
         color_name = [k for k, v in colors.items() if v == print_color][0]
-        results_task1.append([word, color_name, key, rt])
+        results_task1.append([color_name, key, rt])
 
-# Save results of Task 1 to CSV
-with open('resultscontrol_task1.csv', 'w', newline='') as f:
-    writer = csv.writer(f)
-    writer.writerow(["Word", "Color", "Key", "RT"])
-    writer.writerows(results_task1)
+# Save results of Task 1
+save_results(results_task1, 1)
 
 # Instructions for the second task 
 task2_instructions = expyriment.stimuli.TextBox(
@@ -79,11 +91,9 @@ for i in range(1):  # 1 trial for the square color task
         color_name = [k for k, v in colors.items() if v == color][0]
         results_task2.append([color_name, key, rt])
 
-# Save results of Task 2 to CSV
-with open('resultscontrol_task2.csv', 'w', newline='') as f:
-    writer = csv.writer(f)
-    writer.writerow(["Color", "Key", "RT"])
-    writer.writerows(results_task2)
+# Save results of Task 2
+save_results(results_task2, 2)
 
 # End of the experiment
 expyriment.control.end()
+
