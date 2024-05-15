@@ -45,7 +45,7 @@ To run either of the Stroop Task experiments, follow these steps:
 ## Experiment Procedure
 
 - **Instructions:** Each experiment starts with on-screen instructions explaining the controls to the participant. Keys used are 'q' for red, 'd' for green, 'j' for blue, 'l' for purple. To prepare the experiment, the participant can learn these keys or colored stickers can be placed on the keys to facilitate the learning of controls (the conditions just have to remain the same during all experiments and both groups). 
-- **Trials:** Each script executes 5 cycles of trials where stimuli are presented in a random order. Participants respond by pressing designated keys to identify colors.
+- **Trials:** Each script executes 24 trials for each task where stimuli are presented in a random order. Participants respond by pressing designated keys to identify colors. One trial corresponds to one pair of word/color. Each pair is used once per experiment session. There are exactly one half of trials that corresponds to congruent pairs (the word and the color match) and the other half of trials is incongruent pairs. Trials are shuffled to provide variability and prevent pattern recognition. For now, each script executes 24 trials with 12 congruents pairs and 12 incongruent pairs in the first task and 24 trials for the second task. You can modify the total number of trials for each task you need at the beginning of the script.
 - **Results:** Reaction times and key presses are logged for analysis.
 
 ## Data Collection
