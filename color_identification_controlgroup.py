@@ -1,5 +1,6 @@
 import expyriment
 import random
+import csv
 
 # Define colors
 colors = {"red": (255, 0, 0), "green": (0, 255, 0), "blue": (0, 0, 255), "purple": (128, 0, 128)}
@@ -45,6 +46,7 @@ exp.keyboard.wait()
 
 # Task 1: Color Identification of the Words
 words = ["red", "green", "blue", "purple"]
+results_task1 = []
 for i in range(1):  # 1 trial for the word color task
     random.shuffle(words)
     for word in words:
@@ -52,7 +54,13 @@ for i in range(1):  # 1 trial for the word color task
         print_color = random.choice(possible_colors)
         key, rt = display_word(word, print_color)
         color_name = [k for k, v in colors.items() if v == print_color][0]
-        print(f"Word: {word}, Color: {color_name}, Key: {key}, RT: {rt}")
+        results_task1.append([word, color_name, key, rt])
+
+# Save results of Task 1 to CSV
+with open('resultscontrol_task1.csv', 'w', newline='') as f:
+    writer = csv.writer(f)
+    writer.writerow(["Word", "Color", "Key", "RT"])
+    writer.writerows(results_task1)
 
 # Instructions for the second task 
 task2_instructions = expyriment.stimuli.TextBox(
@@ -62,13 +70,20 @@ task2_instructions.present()
 exp.keyboard.wait()
 
 # Task 2: Color Identification of the Square
+results_task2 = []
 for i in range(1):  # 1 trial for the square color task
     color_list = list(colors.values())
     random.shuffle(color_list)
     for color in color_list:
         key, rt = display_square(color)
         color_name = [k for k, v in colors.items() if v == color][0]
-        print(f"Color: {color_name}, Key: {key}, RT: {rt}")
+        results_task2.append([color_name, key, rt])
+
+# Save results of Task 2 to CSV
+with open('resultscontrol_task2.csv', 'w', newline='') as f:
+    writer = csv.writer(f)
+    writer.writerow(["Color", "Key", "RT"])
+    writer.writerows(results_task2)
 
 # End of the experiment
 expyriment.control.end()
