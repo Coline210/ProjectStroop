@@ -59,9 +59,8 @@ def save_results_squares(results, task, participant_id, group="control_group"):
 # Prepare the experiment
 expyriment.control.start()
 
-# Ask for participant ID
-participant_id_input = expyriment.io.TextInput("Please enter your participant ID: ")
-participant_id = participant_id_input.get()
+# Use subject number as participant ID
+participant_id = exp.subject
 
 # General instructions 
 general_instructions = expyriment.stimuli.TextBox(
