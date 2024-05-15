@@ -52,6 +52,8 @@ To run either of the Stroop Task experiments, follow these steps:
 
 The scripts print the results directly to the console, including the stimuli presented, the participant's response, and the reaction time. 
 
+-> next time : press space bar après chaque instructions au lieu de any key + analyser les résultats 
+
 ## Conclusion
 
 These scripts provide a basic framework for conducting and analyzing Stroop Tasks. 
