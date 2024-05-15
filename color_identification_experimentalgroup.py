@@ -1,5 +1,7 @@
 import expyriment
 import random
+import csv
+import os
 
 # Define colors
 colors = {"red": (255, 0, 0), "green": (0, 255, 0), "blue": (0, 0, 255), "purple": (128, 0, 128)}
@@ -26,8 +28,40 @@ def display_word(word, print_color):
     key, rt = exp.keyboard.wait(keys=[expyriment.misc.constants.K_q, expyriment.misc.constants.K_d, expyriment.misc.constants.K_j, expyriment.misc.constants.K_l])
     return key, rt
 
+# Define functions to save the results of the tasks
+
+def save_results_words(results, task, participant_id, group="experimental_group"):
+    """Saves the results of Task Words to a CSV file."""
+    directory = os.path.join(group, "results")
+    os.makedirs(directory, exist_ok=True)
+    results_path = os.path.join(directory, f"results_task{task}_{participant_id}.csv")
+ 
+    with open(results_path, mode='w', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow(["Word", "Color", "Key", "RT"])
+        writer.writerows(results)
+    
+    print(f"Results saved to: {results_path}")
+
+def save_results_squares(results, task, participant_id, group="experimental_group"):
+    """Saves the results of Task Squares to a CSV file."""
+    directory = os.path.join(group, "results")
+    os.makedirs(directory, exist_ok=True)
+    results_path = os.path.join(directory, f"results_task{task}_{participant_id}.csv")
+ 
+    with open(results_path, mode='w', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow(["Color", "Key", "RT"])
+        writer.writerows(results)
+    
+    print(f"Results saved to: {results_path}")
+
 # Prepare the experiment
 expyriment.control.start()
+
+# Ask for participant ID
+participant_id_input = expyriment.io.TextInput("Please enter your participant ID: ")
+participant_id = participant_id_input.get()
 
 # General instructions 
 general_instructions = expyriment.stimuli.TextBox(
@@ -37,30 +71,35 @@ general_instructions.present()
 exp.keyboard.wait()
 
 # Instructions for the first task 
-task1_instructions = expyriment.stimuli.TextBox(
+tasksquares_instructions = expyriment.stimuli.TextBox(
     text="Task 1: Press the key corresponding to the color of the square that appears on the screen.\nPress 'q' for red, 'd' for green, 'j' for blue, 'l' for purple.\nWhen you are ready, press any key to start.",
     size=(700, 200), position=None, text_size=24, text_colour=(255, 255, 255), background_colour=(0, 0, 0))
-task1_instructions.present()
+tasksquares_instructions.present()
 exp.keyboard.wait()
 
 # Task 1: Color Identification of the Square
+results_tasksquares = []
 for i in range(1):
     color_list = list(colors.values())
     random.shuffle(color_list)
     for color in color_list:
         key, rt = display_square(color)
         color_name = [k for k, v in colors.items() if v == color][0]
-        print(f"Color: {color_name}, Key: {key}, RT: {rt}")
+        results_tasksquares.append([color_name, key, rt])
+
+# Save results of Task 1
+save_results_squares(results_tasksquares, 'squares', participant_id)
 
 # Instructions for the second task 
-task2_instructions = expyriment.stimuli.TextBox(
+taskwords_instructions = expyriment.stimuli.TextBox(
     text="Task 2: Press the key corresponding to the color of the word displayed, not the text of the word itself.\nPress 'q' for red, 'd' for green, 'j' for blue, 'l' for purple.\nWhen you are ready, press any key to start.",
     size=(700, 200), position=None, text_size=24, text_colour=(255, 255, 255), background_colour=(0, 0, 0))
-task2_instructions.present()
+taskwords_instructions.present()
 exp.keyboard.wait()
 
 # Task 2: Color Identification of the Words
 words = ["red", "green", "blue", "purple"]
+results_taskwords = []
 for i in range(1):
     random.shuffle(words)
     for word in words:
@@ -68,7 +107,10 @@ for i in range(1):
         print_color = random.choice(possible_colors)
         key, rt = display_word(word, print_color)
         color_name = [k for k, v in colors.items() if v == print_color][0]
-        print(f"Word: {word}, Color: {color_name}, Key: {key}, RT: {rt}")
+        results_taskwords.append([word, color_name, key, rt])
+
+# Save results of Task 2
+save_results_words(results_taskwords, 'words', participant_id)
 
 # End of the experiment
 expyriment.control.end()

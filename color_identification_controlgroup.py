@@ -31,7 +31,7 @@ def display_word(word, print_color):
 # Define functions to save the results of the tasks
 
 def save_results_words(results, task, participant_id, group="control_group"):
-    """Saves the results of Task 1 to a CSV file."""
+    """Saves the results of Task Words to a CSV file."""
     directory = os.path.join(group, "results")
     os.makedirs(directory, exist_ok=True)
     results_path = os.path.join(directory, f"results_task{task}_{participant_id}.csv")
@@ -44,7 +44,7 @@ def save_results_words(results, task, participant_id, group="control_group"):
     print(f"Results saved to: {results_path}")
 
 def save_results_squares(results, task, participant_id, group="control_group"):
-    """Saves the results of Task 2 to a CSV file."""
+    """Saves the results of Task Squares to a CSV file."""
     directory = os.path.join(group, "results")
     os.makedirs(directory, exist_ok=True)
     results_path = os.path.join(directory, f"results_task{task}_{participant_id}.csv")
