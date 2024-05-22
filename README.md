@@ -9,6 +9,7 @@ This repository contains two Python scripts designed to conduct a Color Identifi
 The first script (`color_identification_experimentalgroup.py`) contains two tasks for the experimental group. 
 
 **Color Identification of Squares Task** : Participants identify the color of a plain square. It is a simple task used to measure basic reaction times without cognitive interference.
+
 **Color Identification of Words Task** : Participants are asked to press a key corresponding to the color in which a word (denoting a different color) is displayed. This task tests the Stroop effect, which measures the ease or difficulty of responding to the color of the word when it is used to spell the name of a different color.
 
 The experimental group first identifies the color of squares during the first task and then the color of words during the second task. 
@@ -45,12 +46,14 @@ To run either of the Stroop Task experiments, follow these steps:
 ## Experiment Procedure
 
 - **Instructions:** Each experiment starts with on-screen instructions explaining the controls to the participant. Keys used are 'q' for red, 'd' for green, 'j' for blue, 'l' for purple. To prepare the experiment, the participant can learn these keys or colored stickers can be placed on the keys to facilitate the learning of controls (the conditions just have to remain the same during all experiments and both groups). 
-- **Trials:** Each script executes 5 cycles of trials where stimuli are presented in a random order. Participants respond by pressing designated keys to identify colors.
+- **Trials:** For the Color Identification of Words Task, one trial is one stimulus, that is to say one pair of word/printed color. In one session, accross all trials, one half of trials are congruent pairs (the word and its printed color match) and the other half of trials are incongruent pairs (the word and its printed color don't match). Each pair is used at least once per experiment session. Trials are shuffled to provide variability and prevent pattern recognition. For the Color Identification of Squares Task, a trial is one colored square. Participants respond by pressing designated keys to identify colors. For now, each script executes 24 trials for the Words Task (with 12 congruents pairs and 12 incongruent pairs for the first task) and 24 trials for the Squares Task. The total number of trials for each task can be modified in the settings at the beginning of each script. 
 - **Results:** Reaction times and key presses are logged for analysis.
 
 ## Data Collection
 
 The scripts print the results directly to the console, including the stimuli presented, the participant's response, and the reaction time. 
+
+-> next time : press space bar après chaque instructions au lieu de any key + analyser les résultats 
 
 ## Conclusion
 
