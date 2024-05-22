@@ -9,6 +9,7 @@ This repository contains two Python scripts designed to conduct a Color Identifi
 The first script (`color_identification_experimentalgroup.py`) contains two tasks for the experimental group. 
 
 **Color Identification of Squares Task** : Participants identify the color of a plain square. It is a simple task used to measure basic reaction times without cognitive interference.
+
 **Color Identification of Words Task** : Participants are asked to press a key corresponding to the color in which a word (denoting a different color) is displayed. This task tests the Stroop effect, which measures the ease or difficulty of responding to the color of the word when it is used to spell the name of a different color.
 
 The experimental group first identifies the color of squares during the first task and then the color of words during the second task. 
